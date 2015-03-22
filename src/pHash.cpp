@@ -426,7 +426,8 @@ void* ph_image_thread(void* p) {
 	for (int i = 0; i < s->n; ++i) {
 		DP* dp = (DP*)s->hash_p[i];
 		ulong64 hash;
-		int ret = ph_dct_imagehash(dp->id, hash);
+		//int ret = ph_dct_imagehash(dp->id, hash);
+		ph_dct_imagehash(dp->id, hash);
 		dp->hash = (ulong64*)malloc(sizeof(hash));
 		memcpy(dp->hash, &hash, sizeof(hash));
 		dp->hash_length = 1;
