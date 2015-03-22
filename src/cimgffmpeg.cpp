@@ -348,45 +348,50 @@ int NextFrames(VFInfo* st_info, CImgList<uint8_t>* pFrameList) {
 }
 
 int GetNumberStreams(const char* file) {
-	AVFormatContext* pFormatCtx;
+	AVFormatContext* pFormatCtx = avformat_alloc_context();
 	av_log_set_level(AV_LOG_QUIET);
 	av_register_all();
 
 	// Open video file
 	if (avformat_open_input(&pFormatCtx, file, NULL, NULL)) {
-		return -1 ;    // Couldn't open file
+		avformat_free_context(pFormatCtx);
+		return -1 ; // Couldn't open file
 	}
 
 	// Retrieve stream information
 	if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
-		return -1;    // Couldn't find stream information
+		avformat_free_context(pFormatCtx);
+		return -1; // Couldn't find stream information
 	}
 
 	int result = pFormatCtx->nb_streams;
 	avformat_close_input(&pFormatCtx);
+	avformat_free_context(pFormatCtx);
 	return result;
 }
 
 long GetNumberVideoFrames(const char* file) {
 	long nb_frames = 0L;
-	AVFormatContext* pFormatCtx;
+	AVFormatContext* pFormatCtx = avformat_alloc_context();
 	av_log_set_level(AV_LOG_QUIET);
 	av_register_all();
 
 	// Open video file
 	if (avformat_open_input(&pFormatCtx, file, NULL, NULL)) {
-		return -1 ;    // Couldn't open file
+		avformat_free_context(pFormatCtx);
+		return -1 ; // Couldn't open file
 	}
 
 	// Retrieve stream information
 	if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
-		return -1;    // Couldn't find stream information
+		avformat_free_context(pFormatCtx);
+		return -1; // Couldn't find stream information
 	}
 
 	// Find the first video stream
 	int videoStream = -1;
 
-	for (unsigned int i = 0; i < pFormatCtx->nb_streams; i++) {
+	for (unsigned int i = 0; i < pFormatCtx->nb_streams; ++i) {
 		if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
 			videoStream = i;
 			break;
@@ -394,18 +399,14 @@ long GetNumberVideoFrames(const char* file) {
 	}
 
 	if (videoStream == -1) {
-		return -1;    // Didn't find a video stream
+		avformat_free_context(pFormatCtx);
+		return -1; // Didn't find a video stream
 	}
 
 	AVStream* str = pFormatCtx->streams[videoStream];
 	nb_frames = str->nb_frames;
 
-	if (nb_frames > 0) {
-		//the easy way if value is already contained in struct
-		avformat_close_input(&pFormatCtx);
-		return nb_frames;
-	} else { // frames must be counted
-		AVPacket packet;
+	if (nb_frames <= 0) { // frames must be counted
 		nb_frames = (long)av_index_search_timestamp(str, str->duration, AVSEEK_FLAG_ANY | AVSEEK_FLAG_BACKWARD);
 		// Close the video file
 		int timebase = str->time_base.den / str->time_base.num;
@@ -413,30 +414,34 @@ long GetNumberVideoFrames(const char* file) {
 		if (nb_frames <= 0) {
 			nb_frames = str->duration / timebase;
 		}
-
-		avformat_close_input(&pFormatCtx);
-		return nb_frames;
 	}
+
+	// else value is already contained in struct
+	avformat_close_input(&pFormatCtx);
+	avformat_free_context(pFormatCtx);
+	return nb_frames;
 }
 
 float fps(const char* filename) {
 	float result = 0;
-	AVFormatContext* pFormatCtx;
+	AVFormatContext* pFormatCtx = avformat_alloc_context();
 
 	// Open video file
 	if (avformat_open_input(&pFormatCtx, filename, NULL, NULL)) {
-		return -1 ;    // Couldn't open file
+		avformat_free_context(pFormatCtx);
+		return -1 ; // Couldn't open file
 	}
 
 	// Retrieve stream information
 	if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
-		return -1;    // Couldn't find stream information
+		avformat_free_context(pFormatCtx);
+		return -1; // Couldn't find stream information
 	}
 
 	// Find the first video stream
 	int videoStream = -1;
 
-	for (unsigned int i = 0; i < pFormatCtx->nb_streams; i++) {
+	for (unsigned int i = 0; i < pFormatCtx->nb_streams; ++i) {
 		if (pFormatCtx->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
 			videoStream = i;
 			break;
@@ -444,12 +449,14 @@ float fps(const char* filename) {
 	}
 
 	if (videoStream == -1) {
-		return -1;    // Didn't find a video stream
+		avformat_free_context(pFormatCtx);
+		return -1; // Didn't find a video stream
 	}
 
 	int num = (pFormatCtx->streams[videoStream]->r_frame_rate).num;
 	int den = (pFormatCtx->streams[videoStream]->r_frame_rate).den;
 	result = num / den;
 	avformat_close_input(&pFormatCtx);
+	avformat_free_context(pFormatCtx);
 	return result;
 }
