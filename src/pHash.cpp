@@ -431,6 +431,7 @@ void* ph_image_thread(void* p) {
 		memcpy(dp->hash, &hash, sizeof(hash));
 		dp->hash_length = 1;
 	}
+	return NULL;
 }
 
 DP** ph_dct_image_hashes(char* files[], int count, int threads) {
@@ -743,6 +744,7 @@ void* ph_video_thread(void* p) {
 			dp->hash_length = 0;
 		}
 	}
+	return NULL;
 }
 
 DP** ph_dct_video_hashes(char* files[], int count, int threads) {
