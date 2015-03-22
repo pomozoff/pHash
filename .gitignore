@@ -48,3 +48,4 @@ examples/test_texthash
 examples/test_texthash2
 examples/test_video
 src/Makefile
+test_video2
