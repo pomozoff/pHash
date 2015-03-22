@@ -32,6 +32,6 @@
 #include </usr/include/complex.h>
 #include <stdlib.h>
 
-int fft(double *x, int N, complex double *X);
+int fft(double* x, int N, complex double* X);
 
 #endif

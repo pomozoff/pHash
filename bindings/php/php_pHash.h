@@ -12,7 +12,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $ Id: $ */ 
+/* $ Id: $ */
 
 #ifndef PHP_PHASH_H
 #define PHP_PHASH_H
@@ -36,7 +36,7 @@ extern "C" {
 #include <ext/standard/info.h>
 #include <Zend/zend_extensions.h>
 #ifdef  __cplusplus
-} // extern "C" 
+} // extern "C"
 #endif
 #include <pHash.h>
 #include <audiophash.h>
@@ -81,7 +81,7 @@ PHP_MINFO_FUNCTION(pHash);
 PHP_FUNCTION(ph_dct_videohash);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_dct_videohash_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
-  ZEND_ARG_INFO(0, file)
+ZEND_ARG_INFO(0, file)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_dct_videohash_arg_info NULL
@@ -92,7 +92,7 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_dct_imagehash);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_dct_imagehash_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
-  ZEND_ARG_INFO(0, file)
+ZEND_ARG_INFO(0, file)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_dct_imagehash_arg_info NULL
@@ -102,7 +102,7 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_texthash);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_texthash_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
-  ZEND_ARG_INFO(0, file)
+ZEND_ARG_INFO(0, file)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_texthash_arg_info NULL
@@ -112,9 +112,9 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_audiohash);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_audiohash_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 1)
-  ZEND_ARG_INFO(0, file)
-  ZEND_ARG_INFO(0, sample_rate)
-  ZEND_ARG_INFO(0, channels)
+ZEND_ARG_INFO(0, file)
+ZEND_ARG_INFO(0, sample_rate)
+ZEND_ARG_INFO(0, channels)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_audiohash_arg_info NULL
@@ -125,8 +125,8 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_image_dist);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_image_dist_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
-  ZEND_ARG_INFO(0, h1)
-  ZEND_ARG_INFO(0, h2)
+ZEND_ARG_INFO(0, h1)
+ZEND_ARG_INFO(0, h2)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_image_dist_arg_info NULL
@@ -137,9 +137,9 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_video_dist);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_video_dist_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
-  ZEND_ARG_INFO(0, h1)
-  ZEND_ARG_INFO(0, h2)
-  ZEND_ARG_INFO(0, thresh)
+ZEND_ARG_INFO(0, h1)
+ZEND_ARG_INFO(0, h2)
+ZEND_ARG_INFO(0, thresh)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_video_dist_arg_info NULL
@@ -150,10 +150,10 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_audio_dist);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_audio_dist_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
-  ZEND_ARG_INFO(0, h1)
-  ZEND_ARG_INFO(0, h2)
-  ZEND_ARG_INFO(0, block_size)
-  ZEND_ARG_INFO(0, thresh)
+ZEND_ARG_INFO(0, h1)
+ZEND_ARG_INFO(0, h2)
+ZEND_ARG_INFO(0, block_size)
+ZEND_ARG_INFO(0, thresh)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_audio_dist_arg_info NULL
@@ -163,15 +163,15 @@ ZEND_END_ARG_INFO()
 PHP_FUNCTION(ph_compare_text_hashes);
 #if (PHP_MAJOR_VERSION >= 5)
 ZEND_BEGIN_ARG_INFO_EX(ph_compare_text_hashes_arg_info, ZEND_SEND_BY_VAL, ZEND_RETURN_VALUE, 2)
-  ZEND_ARG_INFO(0, h1)
-  ZEND_ARG_INFO(0, h2)
+ZEND_ARG_INFO(0, h1)
+ZEND_ARG_INFO(0, h2)
 ZEND_END_ARG_INFO()
 #else /* PHP 4.x */
 #define ph_compare_text_hashes_arg_info NULL
 #endif
 
 #ifdef  __cplusplus
-} // extern "C" 
+} // extern "C"
 #endif
 
 #endif /* PHP_HAVE_PHASH */
