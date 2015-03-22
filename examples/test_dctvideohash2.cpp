@@ -29,6 +29,23 @@
 #include "CImg.h"
 #include "cimgffmpeg.h"
 
+ulong64* calc_hash_for_file(const char* file_name, int& length) {
+	ulong64* hash;
+
+	printf("file: %s\n", file_name);
+	hash = ph_dct_videohash(file_name, length);
+	if (hash) {
+		printf("length: %d\n", length);
+		for (int i = 0; i < length; ++i) {
+			printf("hash[%d]: %llx\n", i, hash[i]);
+		}
+	} else {
+		printf("hash is null");
+	}
+
+	return hash;
+}
+
 int main(int argc, char** argv) {
 	if (argc < 2) {
 		printf("not enough input arguments\n");
@@ -43,35 +60,20 @@ int main(int argc, char** argv) {
 		exit(1);
 	}
 
-	ulong64* hash1, *hash2;
-	int L1, L2;
-	double sim;
-	printf("file1: %s\n", file1);
-	hash1 = ph_dct_videohash(file1, L1);
-
+	int length1;
+	ulong64* hash1 = calc_hash_for_file(file1, length1);
 	if (!hash1) {
-		printf("hash1 is null");
 		exit(2);
 	}
 
-	printf("length1: %d\n", L1);
-
-	for (int i = 0; i < L1; i++) {
-		printf("hash1[%d]: %llx\n", i, hash1[i]);
-	}
-
-	printf("file2: %s\n", file2);
-	hash2 = ph_dct_videohash(file2, L2);
-
+	int length2;
+	ulong64* hash2 = calc_hash_for_file(file2, length2);
 	if (!hash2) {
-		printf("hash 2 is null\n");
 		free(hash1);
 		exit(3);
 	}
 
-	printf("length2: %d\n", L2);
-
-	sim = ph_dct_videohash_dist(hash1, L1, hash2, L2, 21);
+	double sim = ph_dct_videohash_dist(hash1, length1, hash2, length2, 21);
 	printf("similarity: %f\n", sim);
 
 	free(hash1);
